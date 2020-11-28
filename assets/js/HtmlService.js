@@ -1,6 +1,5 @@
+const doneCssClass = 'done';
 export default class HtmlService {
-  _todoService;
-
   constructor(todoService) {
     this.todoService = todoService;
     this.bindFormEvent();
@@ -11,7 +10,7 @@ export default class HtmlService {
     const form = document.querySelector("form");
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      this.addTask(form.item.value)
+      this.addTask(form.item.value);
       form.reset();
       form.item.focus();
     });
@@ -21,14 +20,29 @@ export default class HtmlService {
     const task = { description, done: false };
     const taskId = await this.todoService.save(task);
     task.id = taskId;
-    this.addToHtmlList(task)
+    this.addToHtmlList(task);
   }
 
   async listTasks() {
     const tasks = await this.todoService.getAll();
-    tasks.forEach(task => {
-      this.addToHtmlList(task);
-    });
+    tasks.forEach((task) => this.addToHtmlList(task));
+  }
+
+  async deleteTask(taskId, li) {
+    await this.todoService.delete(taskId);
+    li.remove();
+  }
+
+  async saveTask(taskId, isDone) {
+    const task = await this.todoService.get(taskId);
+    task.done = isDone;
+    await this.todoService.save(task);
+  }
+
+  toggleTask(li, taskId) {
+    li.classList.toggle(doneCssClass);
+    const isDone = li.classList.contains(doneCssClass);
+    this.saveTask(taskId, isDone);
   }
 
   addToHtmlList(task) {
@@ -37,13 +51,19 @@ export default class HtmlService {
     const span = document.createElement("span");
     const button = document.createElement("button");
 
-    span.textContent = task.description;
-    button.textContent = "x";
+    li.addEventListener("click", () => this.toggleTask(li, task.id));
 
-    li.setAttribute("data-item-id", task.id);
     if (task.done) {
-      li.classList.add("done");
+      li.classList.add(doneCssClass);
     }
+
+    span.textContent = task.description;
+
+    button.textContent = "x";
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      this.deleteTask(task.id, li);
+    });
 
     li.appendChild(span);
     li.appendChild(button);

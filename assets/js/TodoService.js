@@ -38,6 +38,6 @@ export default class TodoService {
   }
 
   delete(id) {
-    return db.tasks.delete();
+    return db.tasks.delete(id);
   }
 }
