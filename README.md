@@ -10,7 +10,7 @@ An example of PWA with Vanilla JS and IndexedDB
 * [Acknowledgements](#acknowledgements)
 
 ### Screnshoots
-![](...)
+![](/assets/images/pwa.gif)
 
 ### General info
 ...
