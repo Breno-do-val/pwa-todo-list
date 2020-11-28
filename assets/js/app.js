@@ -1,9 +1,10 @@
-import HtmlService from './HtmlService.js';
+import HtmlService from "./HtmlService.js";
+import TodoService from './TodoService.js';
 
 class App {
   constructor() {
     this.registerServiceWorker();
-    new HtmlService();
+    new HtmlService(new TodoService());
   }
 
   registerServiceWorker() {
@@ -17,7 +18,6 @@ class App {
         .catch(onfailure);
     }
   }
-
 }
 
 new App();
