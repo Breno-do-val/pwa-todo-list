@@ -4,6 +4,10 @@ import TodoService from "./TodoService.js";
 class App {
   constructor() {
     this.registerServiceWorker();
+    this.initialize();
+  }
+  
+  initialize() {
     new HtmlService(new TodoService());
   }
 
