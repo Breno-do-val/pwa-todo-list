@@ -1,5 +1,5 @@
 import HtmlService from "./HtmlService.js";
-import TodoService from './TodoService.js';
+import TodoService from "./TodoService.js";
 
 class App {
   constructor() {

@@ -1,8 +1,8 @@
 export default class HtmlService {
-  #todoService;
+  _todoService;
 
-  constructor() {
-    this.bindFormEvent(todoService);
+  constructor(todoService) {
+    this.bindFormEvent();
     this.todoService = todoService;
   }
 
